@@ -7,6 +7,8 @@ require "gosu"
 class GameWindow < Gosu::Window
 	def initialize
 		super 640, 480
+		@window_height = 640
+		@window_width = 480
 		self.caption = "Shapes Thingy"
 
 		@background = Gosu::Image.new("background.jpg", :tileable => true)
@@ -28,11 +30,17 @@ class GameWindow < Gosu::Window
 
 
 	def update
-		if Gosu::button_down? Gosu::MsLeft then
-			@squares.push(Square.new(mouse_x, mouse_y))
+
+		if Gosu::button_down? Gosu::MsMiddle then
+			@triangles.push(Triangle.new(mouse_x, mouse_y, @window_width / 10))
 		end
+
+		if Gosu::button_down? Gosu::MsLeft then
+			@squares.push(Square.new(mouse_x, mouse_y, @window_height / 10))
+		end
+
 		if Gosu::button_down? Gosu::MsRight then
-			@rectangles.push(Rectangle.new(mouse_x, mouse_y))
+			@rectangles.push(Rectangle.new(mouse_x, mouse_y, @window_height / 10))
 		end
 	end
 
@@ -40,6 +48,7 @@ class GameWindow < Gosu::Window
 		@triangles.each{|triangle| triangle.draw}
 		@rectangles.each{|rectangle| rectangle.draw}
 		@squares.each{|square| square.draw}
+
 		@background.draw(0,0,0)
 	end
 

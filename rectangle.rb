@@ -2,17 +2,19 @@ require_relative "zorder"
 require 'gosu'
 
 class Rectangle
-	attr_reader :x, :y
+	attr_reader :x, :y, :fill_x, :color
 
-	def initialize(x, y)
+	def initialize(x, y, fill_x)
 		@x = x
 		@y = y
+		@fill_x = fill_x
+		@color = 0xff_0012ff
 	end
 
 	def draw
-		Gosu.draw_line(@x, @y, 0xff_12ff00, @x + 200, @y, 0xff_12ff00, ZOrder::Rectangle)
-		Gosu.draw_line(@x, @y + 100, 0xff_12ff00, @x + 200, @y + 100, 0xff_12ff00, ZOrder::Rectangle)
-		Gosu.draw_line(@x, @y, 0xff_12ff00, @x, @y + 100, 0xff_12ff00, ZOrder::Rectangle)
-		Gosu.draw_line(@x + 200, @y, 0xff_12ff00, @x + 200, @y + 100, 0xff_12ff00, ZOrder::Rectangle)
+
+		for i in 0..fill_x do 
+			Gosu.draw_line(@x, @y + i, @color, @x + 2*@fill_x, @y + i, @color, ZOrder::Square)
+		end
 	end
 end
